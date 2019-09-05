@@ -3,9 +3,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apk update && \
     apk upgrade && \
     apk add openssl curl ca-certificates 
-RUN set -eux; \
-	addgroup -g 82 -S nginx; \
-	adduser -u 82 -D -S -G nginx nginx
+# RUN set -eux; \
+# 	addgroup -g 82 -S nginx; \
+# 	adduser -u 82 -D -S -G nginx nginx
+RUN adduser -D -g 'nginx' nginx
 RUN printf "%s%s%s\n" \
 "http://nginx.org/packages/alpine/v" \
 `egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release` \
