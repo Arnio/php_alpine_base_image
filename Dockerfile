@@ -32,10 +32,10 @@ RUN apk add --no-cache composer \
             php7-xdebug \
             php7-curl && \
     rm -rf /var/cache/apk/* 
-RUN /usr/sbin/set -eux; \
-	/usr/sbin/addgroup -g 82 -S nginx; \
-	/usr/sbin/adduser -u 82 -D -S -G nginx nginx
-# RUN adduser -D -g 'nginx' nginx
+# RUN /usr/sbin/set -eux; \
+# 	/usr/sbin/addgroup -g 82 -S nginx; \
+# 	/usr/sbin/adduser -u 82 -D -S -G nginx nginx
+RUN adduser -S nginx -u 1000
 RUN mkdir -p /var/www/html /var/run/php/ && \
     sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php7/php.ini 
 
