@@ -1,15 +1,12 @@
-FROM alpine:latest
+FROM alpine:3.10
+RUN set -x \
+# create nginx user/group first, to be consistent throughout docker variants
+    && addgroup -g 101 -S nginx \
+    && adduser -S -D -H -u 101 -h /var/cache/nginx -s /sbin/nologin -G nginx -g nginx nginx
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone 
 RUN apk update && \
     apk upgrade && \
     apk add openssl curl ca-certificates 
-# RUN set -eux; \
-# 	addgroup -g 82 -S nginx; \
-# 	adduser -u 82 -D -S -G nginx nginx
-RUN set -x \
-# create nginx user/group first, to be consistent throughout docker variants
-    && addgroup --system --gid 101 nginx \
-    && adduser --system --disabled-login --ingroup nginx --no-create-home --home /nonexistent --gecos "nginx user" --shell /bin/false --uid 101 nginx
 
 RUN printf "%s%s%s\n" \
 "http://nginx.org/packages/alpine/v" \
