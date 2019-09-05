@@ -3,10 +3,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apk update && \
     apk upgrade && \
     apk add openssl curl ca-certificates 
-# RUN set -eux; \
-# 	addgroup -g 82 -S nginx; \
-# 	adduser -u 82 -D -S -G nginx nginx
-RUN adduser -D -g 'nginx' nginx
+
 RUN printf "%s%s%s\n" \
 "http://nginx.org/packages/alpine/v" \
 `egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release` \
@@ -35,7 +32,10 @@ RUN apk add --no-cache composer \
             php7-xdebug \
             php7-curl && \
     rm -rf /var/cache/apk/* 
-
+# RUN set -eux; \
+# 	addgroup -g 82 -S nginx; \
+# 	adduser -u 82 -D -S -G nginx nginx
+RUN adduser -D -g 'nginx' nginx
 RUN mkdir -p /var/www/html /var/run/php/ && \
     sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php7/php.ini 
 
