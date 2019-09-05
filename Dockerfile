@@ -35,7 +35,7 @@ RUN apk add --no-cache composer \
 # RUN /usr/sbin/set -eux; \
 # 	/usr/sbin/addgroup -g 82 -S nginx; \
 # 	/usr/sbin/adduser -u 82 -D -S -G nginx nginx
-RUN useradd -ms /bin/bash nginx
+#RUN useradd -ms /bin/bash nginx
 RUN mkdir -p /var/www/html /var/run/php/ && \
     sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php7/php.ini 
 
@@ -47,7 +47,7 @@ COPY ./default /etc/nginx/conf.d/default.conf
 COPY ./www.conf /etc/php7/php-fpm.d/www.conf
 COPY ./start.sh /usr/local/bin/
 COPY ./info.php /var/www/html/index.php
-RUN chown -R nginx:nginx /var/www/html && \
-    chmod u+x /usr/local/bin/start.sh
+# RUN chown -R nginx:nginx /var/www/html && \
+RUN   chmod u+x /usr/local/bin/start.sh
 EXPOSE 80
 ENTRYPOINT [ "start.sh" ]
