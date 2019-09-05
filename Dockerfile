@@ -3,6 +3,13 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN apk update && \
     apk upgrade && \
     apk add openssl curl ca-certificates 
+# RUN set -eux; \
+# 	addgroup -g 82 -S nginx; \
+# 	adduser -u 82 -D -S -G nginx nginx
+RUN set -x \
+# create nginx user/group first, to be consistent throughout docker variants
+    && addgroup --system --gid 101 nginx \
+    && adduser --system --disabled-login --ingroup nginx --no-create-home --home /nonexistent --gecos "nginx user" --shell /bin/false --uid 101 nginx
 
 RUN printf "%s%s%s\n" \
 "http://nginx.org/packages/alpine/v" \
@@ -32,10 +39,7 @@ RUN apk add --no-cache composer \
             php7-xdebug \
             php7-curl && \
     rm -rf /var/cache/apk/* 
-RUN /usr/sbin/set -eux; \
-	/usr/sbin/addgroup -g 82 -S nginx; \
-	/usr/sbin/adduser -u 82 -D -S -G nginx nginx
-#RUN useradd -ms /bin/bash nginx
+
 RUN mkdir -p /var/www/html /var/run/php/ && \
     sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php7/php.ini 
 
@@ -47,7 +51,7 @@ COPY ./default /etc/nginx/conf.d/default.conf
 COPY ./www.conf /etc/php7/php-fpm.d/www.conf
 COPY ./start.sh /usr/local/bin/
 COPY ./info.php /var/www/html/index.php
-# RUN chown -R nginx:nginx /var/www/html && \
-RUN   chmod u+x /usr/local/bin/start.sh
+RUN chown -R nginx:nginx /var/www/html && \
+    chmod u+x /usr/local/bin/start.sh
 EXPOSE 80
 ENTRYPOINT [ "start.sh" ]
