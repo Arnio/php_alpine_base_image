@@ -33,6 +33,7 @@ RUN apk add --no-cache composer \
             php7-soap \
             php7-dom \
             php7-gd \
+            php7-json \
             php7-xdebug \
             php7-curl && \
     rm -rf /var/cache/apk/* 
