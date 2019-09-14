@@ -1,3 +1,4 @@
+apk add --no-cache mysql-client
 composer global require drush/drush:9.*
 export PATH="$HOME/.composer/vendor/bin:$PATH"
 composer global update
