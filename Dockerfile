@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.10
 RUN set -x \
 # create nginx user/group first, to be consistent throughout docker variants
     && addgroup -g 101 -S nginx \
