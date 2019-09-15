@@ -1,5 +1,5 @@
 FROM alpine:3.10
-ENV PHP_VERSION=7.1
+ENV PHP_VERSION=7.3
 RUN set -x \
 # create nginx user/group first, to be consistent throughout docker variants
     && addgroup -g 101 -S nginx \
