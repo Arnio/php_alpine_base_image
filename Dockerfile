@@ -1,5 +1,5 @@
 FROM alpine:3.10
-
+ENV PHP_VERSION=7.2
 RUN set -x \
 # create nginx user/group first, to be consistent throughout docker variants
     && addgroup -g 101 -S nginx \
@@ -13,30 +13,30 @@ RUN printf "%s%s%s\n" \
 "http://nginx.org/packages/alpine/v" \
 `egrep -o '^[0-9]+\.[0-9]+' /etc/alpine-release` \
 "/main" \
-| tee -a /etc/apk/repositories 
+| tee -a /etc/apk/repositories && echo "https://dl.bintray.com/php-alpine/v3.8/php-7.2" >> /etc/apk/repositories
 RUN curl -o /tmp/nginx_signing.rsa.pub https://nginx.org/keys/nginx_signing.rsa.pub && mv /tmp/nginx_signing.rsa.pub /etc/apk/keys/
 RUN apk add --no-cache composer \
             bash \
             nginx \
             git \
             unzip \
-            php7 \
-            php7-fpm \
-            php7-pdo_mysql \
-            php7-session \
-            php7-simplexml \
-            php7-xmlwriter \
-            php7-opcache \
-            php7-tokenizer \
-            php7-common \
-            php7-mbstring \
-            php7-xml \
-            php7-soap \
-            php7-dom \
-            php7-gd \
-            php7-json \
-            php7-xdebug \
-            php7-curl && \
+            php7=${PHP_VERSION} \
+            php7-fpm=${PHP_VERSION} \
+            php7-pdo_mysql=${PHP_VERSION} \
+            php7-session=${PHP_VERSION} \
+            php7-simplexml=${PHP_VERSION} \
+            php7-xmlwriter=${PHP_VERSION} \
+            php7-opcache=${PHP_VERSION} \
+            php7-tokenizer=${PHP_VERSION} \
+            php7-common=${PHP_VERSION} \
+            php7-mbstring=${PHP_VERSION} \
+            php7-xml=${PHP_VERSION} \
+            php7-soap=${PHP_VERSION} \
+            php7-dom=${PHP_VERSION} \
+            php7-gd=${PHP_VERSION} \
+            php7-json=${PHP_VERSION} \
+            php7-xdebug=${PHP_VERSION} \
+            php7-curl=${PHP_VERSION} && \
     rm -rf /var/cache/apk/* 
 
 RUN mkdir -p /var/www/html /var/run/php/ && \
