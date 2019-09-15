@@ -1,5 +1,5 @@
 FROM alpine:3.10
-ENV PHP_VERSION=7.3
+
 RUN set -x \
 # create nginx user/group first, to be consistent throughout docker variants
     && addgroup -g 101 -S nginx \
@@ -20,23 +20,23 @@ RUN apk add --no-cache composer \
             nginx \
             git \
             unzip \
-            php7=${PHP_VERSION} \
-            php7-fpm=${PHP_VERSION} \
-            php7-pdo_mysql=${PHP_VERSION} \
-            php7-session=${PHP_VERSION} \
-            php7-simplexml=${PHP_VERSION} \
-            php7-xmlwriter=${PHP_VERSION} \
-            php7-opcache=${PHP_VERSION} \
-            php7-tokenizer=${PHP_VERSION} \
-            php7-common=${PHP_VERSION} \
-            php7-mbstring=${PHP_VERSION} \
-            php7-xml=${PHP_VERSION} \
-            php7-soap=${PHP_VERSION} \
-            php7-dom=${PHP_VERSION} \
-            php7-gd=${PHP_VERSION} \
-            php7-json=${PHP_VERSION} \
-            php7-xdebug=${PHP_VERSION} \
-            php7-curl=${PHP_VERSION} && \
+            php7 \
+            php7-fpm \
+            php7-pdo_mysql \
+            php7-session \
+            php7-simplexml \
+            php7-xmlwriter \
+            php7-opcache \
+            php7-tokenizer \
+            php7-common \
+            php7-mbstring \
+            php7-xml \
+            php7-soap \
+            php7-dom \
+            php7-gd \
+            php7-json \
+            php7-xdebug \
+            php7-curl && \
     rm -rf /var/cache/apk/* 
 
 RUN mkdir -p /var/www/html /var/run/php/ && \
