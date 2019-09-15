@@ -39,7 +39,8 @@ RUN apk add --no-cache composer \
     rm -rf /var/cache/apk/* 
 
 RUN mkdir -p /var/www/html /var/run/php/ && \
-    sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php7/php.ini 
+    sed -i -e 's/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g' /etc/php7/php.ini && \
+    sed -i "s|;*memory_limit =.*|memory_limit = 256M|i" /etc/php7/php.ini
 
 RUN curl -sS https://getcomposer.org/installer -o composer-setup.php && \
     php composer-setup.php --install-dir=/usr/local/bin --filename=composer 
