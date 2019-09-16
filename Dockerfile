@@ -50,7 +50,7 @@ COPY ./default /etc/nginx/conf.d/default.conf
 COPY ./www.conf /etc/php7/php-fpm.d/www.conf
 # COPY ./start.sh /usr/local/bin/
 # COPY ./initapp.sh /usr/local/bin/
-COPY ./scripts/* /usr/local/bin/
+COPY ./scripts/*.* /usr/local/bin/
 COPY ./info.php /var/www/html/index.php
 RUN chown -R nginx:nginx /var/www/html && \
     chmod u+x /usr/local/bin/start.sh && \
