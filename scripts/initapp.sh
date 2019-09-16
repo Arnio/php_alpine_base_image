@@ -1,4 +1,4 @@
-apk add mqsql-client
+apk add mysql-client
 filecount=$(ls -At1 /var/www/html/thunder/sites/default/* 2>&- | wc -l)
 if [ $filecount -gt 3 ]; then
         echo -e "The folder has $filecount some file(s) failed to be processed" "\n"
