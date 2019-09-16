@@ -10,4 +10,3 @@ else
         chown -R nginx:nginx /var/www/html/thunder/sites/            
 fi
 
-
