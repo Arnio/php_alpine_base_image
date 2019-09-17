@@ -11,6 +11,11 @@ if [ $RESULT -lt 1 ]; then
                 chmod a+w -R /var/www/html/thunder/sites/default
                 cd /var/www/html/thunder/ && vendor/bin/drush -y si standard --db-url=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/${MYSQL_DATABASE} --site-name=SiteName --account-name=admin --account-pass=admin
                 chown -R nginx:nginx /var/www/html/thunder/sites/            
+
+
         fi
+else
+/var/www/html/thunder/vendor/bin/drush sql:connect --db-url=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@${MYSQL_HOST}/${MYSQL_DATABASE}
 fi
+
 /var/www/html/thunder/vendor/bin/drush cr
