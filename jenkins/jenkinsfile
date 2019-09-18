@@ -1,6 +1,14 @@
 node('') {
 properties([[$class: 'BuildDiscarderProperty', strategy: [$class: 'LogRotator', artifactDaysToKeepStr: '', artifactNumToKeepStr: '', daysToKeepStr: '', numToKeepStr: '10']], pipelineTriggers([ pollSCM('H/2 * * * *')])])     
 
+stage('SCM') 
+{checkout([$class: 'GitSCM', 
+    branches: [[name: '*/master']], 
+    doGenerateSubmoduleConfigurations: false, 
+    extensions: [[$class: 'CleanCheckout']], 
+    submoduleCfg: [], 
+    userRemoteConfigs: [[credentialsId: 'jenkins-app-git-key', url: 'https://github.com/Arnio/php_alpine_base_image.git']]
+])}               
 stage ('buildInJankins')
   {openshiftBuild(namespace: '${JENKINS_NAME}', buildConfig: 'php-fpm-alpine', showBuildLogs: 'true',  waitTime: '3000000')}
 }
