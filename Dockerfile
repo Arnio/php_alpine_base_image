@@ -35,7 +35,8 @@ RUN apk add --no-cache composer \
             php7-gd \
             php7-json \
             php7-xdebug \
-            php7-curl && \
+            php7-curl \
+            php7-sqlite3 && \
     rm -rf /var/cache/apk/* 
 
 RUN mkdir -p /var/www/html /var/run/php/ && \
