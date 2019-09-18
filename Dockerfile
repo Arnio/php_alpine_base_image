@@ -53,7 +53,6 @@ COPY ./www.conf /etc/php7/php-fpm.d/www.conf
 COPY ./scripts/*.* /usr/local/bin/
 COPY ./info.php /var/www/html/index.php
 RUN chown -R nginx:nginx /var/www/html && \
-    chmod u+x /usr/local/bin/start.sh && \
-    chmod u+x /usr/local/bin/initapp.sh
+    chmod u+x /usr/local/bin/start.sh 
 EXPOSE 80
 ENTRYPOINT [ "start.sh" ]
