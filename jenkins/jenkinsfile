@@ -1,14 +1,13 @@
 node('') {
+properties([pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/2 * * * *')])])
 stage ('checscm') 
-{
-properties([pipelineTriggers([[$class: 'GitHubPushTrigger'], pollSCM('H/3 * * * *')])])   
-checkout([$class: 'GitSCM', 
+{checkout([$class: 'GitSCM', 
     branches: [[name: '*/master']], 
     doGenerateSubmoduleConfigurations: false, 
     extensions: [[$class: 'CleanCheckout']], 
     submoduleCfg: [], 
-    userRemoteConfigs: [[credentialsId: 'jenkins-app-git-key', url: 'https://github.com/Arnio/php_alpine_base_image.git']]
+    userRemoteConfigs: [[credentialsId: '${JENKINS_NAME}-git-key', url: 'https://github.com/Arnio/php_alpine_base_image.git']]
 ])}
 stage ('buildInJankins')
-  {openshiftBuild(namespace: 'jenkins-app', buildConfig: 'php-fpm-alpine', showBuildLogs: 'true',  waitTime: '3000000')}
+  {openshiftBuild(namespace: '${JENKINS_NAME}', buildConfig: 'php-fpm-alpine', showBuildLogs: 'true',  waitTime: '3000000')}
 }
